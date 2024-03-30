@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -78,15 +77,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = { 
     'default': { 
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', 
-        'NAME': 'my_project', 
-        'USER': 'Didar', 
-        'PASSWORD': 'Didar518733', 
-        'HOST': 'localhost', 
-        'PORT': '5432', 
+         
         } ,
     'bd1': { 
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', 
+        'ENGINE': 'django.db.backends.postgresql', 
         'NAME': 'DB1_BS', 
         'USER': 'Didar', 
         'PASSWORD': 'Didar518733', 
@@ -94,13 +88,12 @@ DATABASES = {
         'PORT': '5432', 
          },
     'bd2': { 
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', 
+        'ENGINE': 'django.db.backends.postgresql', 
         'NAME': 'BD2_Credit_Conveyor', 
         'USER': 'Didar', 
         'PASSWORD': 'Didar518733', 
         'HOST': 'localhost', 
         'PORT': '5432', 
-        'OPTIONS': {'client_encoding': 'UTF-8'}
     }
 }
 
@@ -153,8 +146,8 @@ class DefaultRouter:
     auth and contenttypes applications.
     """
 
-    # route_app_labels = {"auth", "contenttypes"}
-    default_db = 'default'
+    route_app_labels = {"auth", "contenttypes", "sessions", "admin"}
+    
     def db_for_read(self, model, **hints):
         """
         Attempts to read auth and contenttypes models go to auth_db.
@@ -199,7 +192,7 @@ class BD1Router:
     auth and contenttypes applications.
     """
 
-    route_app_labels = {"auth", "contenttypes"}
+    route_app_labels = {"auto_BD1_BS"}
 
     def db_for_read(self, model, **hints):
         """
@@ -245,7 +238,7 @@ class BD2Router:
     auth and contenttypes applications.
     """
 
-    route_app_labels = {"auth", "contenttypes"}
+    route_app_labels = {"auto_BD2_Credit_Conveyor"}
 
     def db_for_read(self, model, **hints):
         """
@@ -285,5 +278,5 @@ class BD2Router:
         return None
 
 
-        DATABASE_ROUTERS = ["BD1Router", "BD2Router",  "DefaultRouter"]
+DATABASE_ROUTERS = ["BD1Router", "BD2Router",  ]
 
